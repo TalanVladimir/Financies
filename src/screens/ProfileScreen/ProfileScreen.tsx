@@ -1,13 +1,6 @@
-import React, {useContext} from 'react';
-import {Text, View} from 'react-native';
-import {ThemeContext} from '../../providers/ThemeProvider';
+import React from 'react';
+import {Profile} from '../../components/Profile/Profile';
 
-export const ProfileScreen = () => {
-  const {colors} = useContext(ThemeContext);
-
-  return (
-    <View>
-      <Text style={{color: colors.primaryText}}>HomeScreen</Text>
-    </View>
-  );
+export const ProfileScreen: React.FC = (): JSX.Element => {
+  return <Profile />;
 };
