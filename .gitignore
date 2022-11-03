@@ -1,6 +1,6 @@
 # Own config
 #
-src/firebase/config.ts
+src/firebase/firebase-app.ts
 
 # OSX
 #
