@@ -1,58 +1,35 @@
-import {initializeApp} from 'firebase/app';
-import {getFirestore} from 'firebase/firestore';
-import {getAuth} from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from '@firebase/auth';
+import {app} from './firebase-app';
 
-import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {signInWithEmailAndPassword} from 'firebase/auth';
-import {updateProfile} from 'firebase/auth';
-import {sendEmailVerification} from '@firebase/auth';
+const auth = getAuth(app);
 
-import {firebaseConfig} from './config';
-
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-
-const auth = getAuth(firebaseApp);
-
-const showError = (error: Error) => {
-  const errorMessage = error.message;
-  console.log(`message: ${errorMessage}`);
+const register = async (email: string, password: string) => {
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
-const register = (email: string, password: string) =>
-  createUserWithEmailAndPassword(auth, email, password);
-
-const login = (email: string, password: string) =>
-  signInWithEmailAndPassword(auth, email, password);
-
-const update = async (data: {
-  displayName: string | null | undefined;
-  photoURL: string | null | undefined;
-}) => {
-  const user = await auth.currentUser;
-
-  if (user === null) {
-    return;
-  }
-  updateProfile(user, data)
-    .then(() => {})
-    .catch(showError);
+const login = async (email: string, password: string) => {
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
-const send = async () => {
-  const user = await auth.currentUser;
-
-  if (user === null) {
-    return;
-  }
-  sendEmailVerification(user);
-};
-
-import {signOut} from 'firebase/auth';
 const logout = async () => {
-  signOut(auth)
-    .then(() => {})
-    .catch(showError);
+  return signOut(auth);
 };
 
-export {db, auth, register, login, update, send, logout};
+const update = async (data: {displayName: string; photoURL: string}) => {
+  const user = await auth.currentUser;
+  return user !== null ? updateProfile(user, data) : null;
+};
+
+const sendVerification = async () => {
+  const user = await auth.currentUser;
+  return user !== null ? sendEmailVerification(user) : null;
+};
+
+export {auth, register, login, update, sendVerification, logout};
