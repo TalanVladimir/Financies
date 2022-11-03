@@ -1,11 +1,11 @@
-export type Prepare = {
+export type PrepareType = {
   page: number;
   pages: number;
   filter: number;
   isAsc: boolean;
 };
 
-export type Query = {
+export type QueryType = {
   query: number;
   repo: string;
   organisation: string;
