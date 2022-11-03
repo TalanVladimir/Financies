@@ -12,7 +12,7 @@ import React from 'react';
 
 import {Provider} from 'react-redux';
 import {SafeArea} from './components/SafeArea/SafeArea';
-import {Navigation} from './navigation/Navigation';
+import {Navigation} from './components/Navigation/Navigation';
 import {ThemeProvider} from './providers/ThemeProvider';
 import {store} from './redux/store/store';
 

@@ -1,37 +1,23 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen} from '../screens/HomeScreen/HomeScreen';
-import {ProfileScreen} from '../screens/ProfileScreen/ProfileScreen';
-import {LoginScreen} from '../screens/LoginScreen/LoginScreen';
-import {Menu} from '../components/Menu/Menu';
-import {RegisterScreen} from '../screens/RegisterScreen/RegisterScreen';
+import {FinanciesScreen} from '../../screens/FinanciesScreen/FinanciesScreen';
+import {ProfileScreen} from '../../screens/ProfileScreen/ProfileScreen';
+import {LoginScreen} from '../../screens/LoginScreen/LoginScreen';
+import {Panel} from '../Panel/Panel';
+import {RegisterScreen} from '../../screens/RegisterScreen/RegisterScreen';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import {auth} from '../firebase/firebase';
+import {auth} from '../../firebase/firebase';
 
 const Stack = createNativeStackNavigator();
-
-export type RootStackParamList = {
-  Home: undefined;
-  Login: undefined;
-  Register: undefined;
-  Profile: undefined;
-};
 
 export const Navigation: React.FC = (): JSX.Element => {
   const [user] = useAuthState(auth);
 
   const ShowScreens = user ? (
     <>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerShown: true,
-          // header: () => <Header />,
-        }}
-      />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Financies" component={FinanciesScreen} />
     </>
   ) : (
     <>
@@ -60,7 +46,7 @@ export const Navigation: React.FC = (): JSX.Element => {
         }}>
         {ShowScreens}
       </Stack.Navigator>
-      {user && <Menu />}
+      {user && <Panel />}
     </NavigationContainer>
   );
 };
