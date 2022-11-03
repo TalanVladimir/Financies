@@ -1,15 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useContext} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {RootStackParamList} from '../../navigation/Navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ThemeContext} from '../../providers/ThemeProvider';
+import {NavigationType, RootStackParamList} from '../../types/navigation';
 
-type Props = {
-  name: 'Home' | 'Login' | 'Register' | 'Profile';
-};
-
-export const MenuItem: React.FC<Props> = ({name}): JSX.Element => {
+export const PanelItem: React.FC<NavigationType> = ({name}): JSX.Element => {
   const {colors} = useContext(ThemeContext);
   const {navigate} = useNavigation<StackNavigationProp<RootStackParamList>>();
 

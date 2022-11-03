@@ -1,15 +1,15 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ThemeContext} from '../../providers/ThemeProvider';
-import {MenuItem} from './MenuItem';
+import {PanelItem} from './PanelItem';
 
-export const Menu: React.FC = (): JSX.Element => {
+export const Panel: React.FC = (): JSX.Element => {
   const {colors} = useContext(ThemeContext);
 
   return (
-    <View style={[styles.container, {borderColor: colors.divider}]}>
-      <MenuItem name={'Home'} />
-      <MenuItem name={'Profile'} />
+    <View style={[styles.container, {borderColor: colors.primaryDark}]}>
+      <PanelItem name={'Financies'} />
+      <PanelItem name={'Profile'} />
     </View>
   );
 };
@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
-    borderTopWidth: 1,
+    borderTopWidth: 3,
   },
 });
