@@ -1,16 +1,17 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {logout} from '../../firebase/firebase';
-import {ThemeContext} from '../../providers/ThemeProvider';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import {FinanceItemsMock} from '../../../__mocks__/FinanceItems.mock';
+import {Scroll} from '../Scroll/Scroll';
+import {FinanciesItem} from './FinanciesItem';
 
 export const Financies = () => {
-  const {colors} = useContext(ThemeContext);
-
   return (
-    <View style={[styles.container, {backgroundColor: colors.primaryLight}]}>
-      <TouchableOpacity style={styles.logout} onPress={() => logout()}>
-        <Text style={styles.push}>Logout</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Scroll startFromTop={true}>
+        {FinanceItemsMock.map((item, index) => (
+          <FinanciesItem key={index} index={index} item={item} />
+        ))}
+      </Scroll>
     </View>
   );
 };
@@ -20,17 +21,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  logout: {
-    borderWidth: 5,
-    borderRadius: 15,
-    width: 200,
-    height: 50,
-    backgroundColor: '#E95D5D',
-  },
-  push: {
-    flex: 1,
-    textAlign: 'center',
-    textAlignVertical: 'center',
   },
 });
