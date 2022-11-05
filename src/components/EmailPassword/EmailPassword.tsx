@@ -66,7 +66,9 @@ export const EmailPassword: React.FC<Props> = ({navigateTo}): JSX.Element => {
             );
           });
         }}>
-        <Text style={styles.push}>{isLogin ? 'Login' : 'Register'}</Text>
+        <Text style={[styles.push, {color: colors.white}]}>
+          {isLogin ? 'Login' : 'Register'}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, {backgroundColor: colors.white}]}
@@ -74,7 +76,7 @@ export const EmailPassword: React.FC<Props> = ({navigateTo}): JSX.Element => {
           setError(false);
           navigate(navigateTo);
         }}>
-        <Text style={styles.push}>
+        <Text style={[styles.push, {color: colors.secondaryText}]}>
           {isLogin ? 'Create an account' : 'Login'}
         </Text>
       </TouchableOpacity>
