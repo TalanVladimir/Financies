@@ -1,6 +1,7 @@
 # Own config
 #
 src/firebase/firebase-app.ts
+android/app/src/main/assets/index.android.bundle
 
 # OSX
 #
