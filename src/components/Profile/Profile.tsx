@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth';
-
 import {
+  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {auth, logout, sendVerification, update} from '../../firebase/firebase';
 import {ThemeContext} from '../../providers/ThemeProvider';
+import {Scroll} from '../Scroll/Scroll';
 
 export const Profile = () => {
   const {colors} = useContext(ThemeContext);
@@ -18,8 +19,8 @@ export const Profile = () => {
   const [user] = useAuthState(auth);
 
   const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string | null>(null);
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>('');
+  const [photo, setPhoto] = useState<string>('');
   const [verify, setVerify] = useState<boolean>(false);
 
   const [completed, setCompleted] = useState<boolean>(true);
@@ -27,12 +28,10 @@ export const Profile = () => {
   useEffect(() => {
     const currentUser = user;
     if (currentUser) {
-      if (currentUser.displayName) {
-        setName(currentUser.displayName);
-      }
-      setEmail(currentUser.email);
-      setPhoto(currentUser.photoURL);
-      setVerify(currentUser.emailVerified);
+      setName(currentUser.displayName ? currentUser.displayName : '');
+      setEmail(currentUser.email ? currentUser.email : '');
+      setPhoto(currentUser.photoURL ? currentUser.photoURL : '');
+      setVerify(currentUser.emailVerified ? currentUser.emailVerified : false);
     }
   }, [user]);
 
@@ -54,46 +53,72 @@ export const Profile = () => {
       });
   };
 
+  const imgDefUser = require('../../assets/default_user.png');
+
   return (
     <View style={styles.container}>
-      <View>
-        <View style={[styles.photo, {backgroundColor: colors.primaryLight}]} />
-      </View>
-      <View style={styles.name}>
-        <Text style={styles.text}>name: {name}</Text>
+      <Scroll startFromTop={false}>
+        <ImageBackground
+          source={imgDefUser}
+          resizeMode="cover"
+          style={styles.photo}>
+          <Text
+            style={[
+              styles.photoText,
+              {
+                color: colors.primaryText,
+              },
+            ]}>
+            Photo
+          </Text>
+        </ImageBackground>
         <TextInput
-          style={styles.input}
-          placeholder="not defined"
+          style={[
+            styles.input,
+            {backgroundColor: colors.primaryLight, color: colors.primaryText},
+          ]}
+          placeholder="Not defined user name"
           value={name}
           onChangeText={setName}
         />
-      </View>
-      <Text style={styles.email}>email: {email}</Text>
-      <TouchableOpacity
-        style={[styles.touchable, {backgroundColor: colors.primaryDark}]}
-        onPress={sendVerification}>
-        <Text style={styles.push}>{verify ? 'Verified' : 'Not Verified'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.touchable, {backgroundColor: colors.primaryDark}]}
-        onPress={updateProfile}>
-        <Text style={styles.push}>{completed ? 'Update' : 'Updating'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.touchable}
-        onPress={() =>
-          logout().catch((err: Error) => {
-            ToastAndroid.showWithGravityAndOffset(
-              err.message,
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM,
-              25,
-              50,
-            );
-          })
-        }>
-        <Text style={styles.push}>Logout</Text>
-      </TouchableOpacity>
+        <TextInput
+          style={[
+            styles.input,
+            {backgroundColor: colors.primaryLight, color: colors.secondaryText},
+          ]}
+          value={email}
+          editable={false}
+        />
+        <TouchableOpacity
+          style={[styles.touchable, {backgroundColor: colors.primaryDark}]}
+          onPress={sendVerification}>
+          <Text style={[styles.push, {color: colors.white}]}>
+            {verify ? 'Verified' : 'Not Verified'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.touchable, {backgroundColor: colors.primaryDark}]}
+          onPress={updateProfile}>
+          <Text style={[styles.push, {color: colors.white}]}>
+            {completed ? 'Update' : 'Updating'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.touchable, {backgroundColor: colors.accent}]}
+          onPress={() =>
+            logout().catch((err: Error) => {
+              ToastAndroid.showWithGravityAndOffset(
+                err.message,
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM,
+                25,
+                50,
+              );
+            })
+          }>
+          <Text style={[styles.push, {color: colors.white}]}>Logout</Text>
+        </TouchableOpacity>
+      </Scroll>
     </View>
   );
 };
@@ -101,30 +126,35 @@ export const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   photo: {
+    alignSelf: 'center',
     width: 250,
     height: 250,
     borderRadius: 200,
-    marginBottom: 10,
   },
-  name: {
-    width: 250,
-    backgroundColor: '#18D275',
-  },
-  email: {
-    padding: 5,
+  photoText: {
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+    paddingBottom: 10,
   },
   input: {
+    alignSelf: 'center',
+    marginTop: 5,
+    width: 250,
     borderRadius: 15,
-    borderWidth: 1,
+    borderWidth: 3,
     padding: 5,
     fontSize: 15,
+    textAlign: 'center',
     fontWeight: '900',
   },
   touchable: {
+    alignSelf: 'center',
     width: 250,
     marginTop: 5,
     borderWidth: 3,
