@@ -11,7 +11,10 @@ export const PanelItem: React.FC<NavigationType> = ({name}): JSX.Element => {
 
   return (
     <Text
-      style={[styles.item, {backgroundColor: colors.primary}]}
+      style={[
+        styles.item,
+        {backgroundColor: colors.primary, color: colors.white},
+      ]}
       onPress={() => {
         navigate(name);
       }}>
@@ -25,8 +28,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     flex: 1,
+    fontSize: 16,
     alignContent: 'center',
     textAlignVertical: 'center',
     textAlign: 'center',
+    fontWeight: '900',
   },
 });
