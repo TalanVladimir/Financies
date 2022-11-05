@@ -7,7 +7,8 @@ export const Panel: React.FC = (): JSX.Element => {
   const {colors} = useContext(ThemeContext);
 
   return (
-    <View style={[styles.container, {borderColor: colors.primaryDark}]}>
+    <View style={[styles.container, {borderColor: colors.divider}]}>
+      <PanelItem name={'Buy'} />
       <PanelItem name={'Financies'} />
       <PanelItem name={'Profile'} />
     </View>
@@ -20,6 +21,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
-    borderTopWidth: 3,
+    borderTopWidth: 1,
   },
 });
