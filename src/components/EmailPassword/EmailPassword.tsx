@@ -10,14 +10,18 @@ import {
   View,
 } from 'react-native';
 import {ThemeContext} from '../../providers/ThemeProvider';
-import {NavigationNameType, RootStackParamList} from '../../types/navigation';
+import {
+  NavigationNameType,
+  NavigationStackParamList,
+} from '../../types/navigation';
 import {login, register} from '../../firebase/firebase';
 
 type Props = {navigateTo: NavigationNameType};
 
 export const EmailPassword: React.FC<Props> = ({navigateTo}): JSX.Element => {
   const {colors} = useContext(ThemeContext);
-  const {navigate} = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const {navigate} =
+    useNavigation<StackNavigationProp<NavigationStackParamList>>();
 
   const [email, setEmail] = useState('vovkus@gmail.com');
   const [password, setPassword] = useState('lopulopas111');
