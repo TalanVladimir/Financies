@@ -15,7 +15,6 @@ import {Scroll} from '../Scroll/Scroll';
 
 export const Profile = () => {
   const {colors} = useContext(ThemeContext);
-  // const [user] = useState<FirebaseAuthTypes.User | null>(null);
   const [user] = useAuthState(auth);
 
   const [name, setName] = useState<string>('');
@@ -104,7 +103,10 @@ export const Profile = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.touchable, {backgroundColor: colors.accent}]}
+          style={[
+            styles.touchable,
+            {backgroundColor: colors.accent, marginBottom: 5},
+          ]}
           onPress={() =>
             logout().catch((err: Error) => {
               ToastAndroid.showWithGravityAndOffset(
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   photo: {
+    marginTop: 5,
     alignSelf: 'center',
     width: 250,
     height: 250,
