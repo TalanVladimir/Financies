@@ -10,5 +10,6 @@ export type ThemeType = {
     secondaryText: string;
     divider: string;
     white: string;
+    black: string;
   };
 };
