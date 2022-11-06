@@ -2,8 +2,8 @@ export interface BuyItemType {
   id: number;
   category: string;
   product: string;
-  multiply: number;
-  price: number;
+  multiply: string;
+  price: string;
   email: string;
 }
 
