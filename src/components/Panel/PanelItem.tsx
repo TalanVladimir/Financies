@@ -3,19 +3,39 @@ import React, {useContext} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ThemeContext} from '../../providers/ThemeProvider';
-import {NavigationType, RootStackParamList} from '../../types/navigation';
+import {
+  NavigationNameType,
+  NavigationStackParamList,
+} from '../../types/navigation';
 
-export const PanelItem: React.FC<NavigationType> = ({name}): JSX.Element => {
+type Props = {
+  name: NavigationNameType;
+  page: NavigationNameType;
+  setPage: (page: NavigationNameType) => void;
+};
+
+export const PanelItem: React.FC<Props> = ({
+  name,
+  page,
+  setPage,
+}): JSX.Element => {
   const {colors} = useContext(ThemeContext);
-  const {navigate} = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const {navigate} =
+    useNavigation<StackNavigationProp<NavigationStackParamList>>();
+
+  const isActive = page === name;
 
   return (
     <Text
       style={[
         styles.item,
-        {backgroundColor: colors.primary, color: colors.white},
+        {
+          backgroundColor: colors.primary,
+          color: isActive ? colors.white : colors.primaryDark,
+        },
       ]}
       onPress={() => {
+        setPage(name);
         navigate(name);
       }}>
       {name}
