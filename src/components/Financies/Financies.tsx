@@ -1,15 +1,24 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {FinanceItemsMock} from '../../../__mocks__/FinanceItems.mock';
+import {FinanceItemType} from '../../types/financies';
 import {Scroll} from '../Scroll/Scroll';
 import {FinanciesItem} from './FinanciesItem';
 
-export const Financies = () => {
+const sortFinanciesItems = (a: FinanceItemType, b: FinanceItemType) => {
+  if (a.category === b.category) {
+    return a.product.toLowerCase() < b.product.toLowerCase() ? -1 : 1;
+  } else {
+    return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
+  }
+};
+
+export const Financies: React.FC = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <Scroll startFromTop={true}>
-        {FinanceItemsMock.map((item, index) => (
-          <FinanciesItem key={index} index={index} item={item} />
+        {FinanceItemsMock.sort(sortFinanciesItems).map((item, index) => (
+          <FinanciesItem key={index} item={item} />
         ))}
       </Scroll>
     </View>
