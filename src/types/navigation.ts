@@ -9,7 +9,7 @@ export type NavigationType = {
   name: NavigationNameType;
 };
 
-export type RootStackParamList = {
+export type NavigationStackParamList = {
   Buy: undefined;
   Financies: undefined;
   Login: undefined;
