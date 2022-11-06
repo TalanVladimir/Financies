@@ -11,6 +11,7 @@ export const InitTheme: ThemeType = {
     primaryText: '',
     secondaryText: '',
     divider: '',
-    white: '',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 };
